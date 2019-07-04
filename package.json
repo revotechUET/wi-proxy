@@ -1,0 +1,28 @@
+{
+  "name": "wi-proxy",
+  "version": "1.0.0",
+  "description": "wi-proxy for i2g project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sockyone/wi-proxy.git"
+  },
+  "keywords": [
+    "proxy",
+    "i2g",
+    "sync"
+  ],
+  "author": "Nam Phan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sockyone/wi-proxy/issues"
+  },
+  "homepage": "https://github.com/sockyone/wi-proxy#readme",
+  "dependencies": {
+    "config": "^3.1.0",
+    "express": "^4.17.1"
+  }
+}
