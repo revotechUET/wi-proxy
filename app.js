@@ -6,11 +6,13 @@ const wiBackendRoute = require('./server/router/wi-backend/wi-backend.route');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+
 const app = express();
 
 app.use(bodyParser.json({limit: '50mb', extended: true, type: 'application/json'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, type: 'application/json'}));
 app.use(cors());
+
 
 const port = process.env.PORT || config.get("host.port") || 3033;
 
