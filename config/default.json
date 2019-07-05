@@ -1,5 +1,17 @@
 {
     "host": {
         "port": 3033
+    },
+    "cloud": {
+        "wi_auth": "https://users.i2g.cloud",
+        "wi_backend": "https://api-1.i2g.cloud",
+        "prefix_database": "wi1004_"
+    },
+    "local": {
+        "wi_mysql": {
+            "host": "localhost:3306",
+            "user": "i2g",
+            "password": "qwertyuiop"
+        }
     }
 }

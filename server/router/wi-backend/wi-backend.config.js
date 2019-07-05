@@ -1,4 +1,4 @@
 module.exports = {
-    targetHost: 'localhost:3000',
+    targetHost: 'http://localhost:3000',
     skipsUrls: []
 };

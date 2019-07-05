@@ -9,33 +9,35 @@ function proxyRouteOf(hostConfig) {
     return async function(req, res, next) {
         let baseUrl = req.baseUrl;
         let url = req.originalUrl;
-        url = url.slice(baseUrl.length, url.length - 1);
+        url = url.slice(baseUrl.length, url.length);
 
         //in skip list then next()
         if (skipUrls.includes(url)) {
             next();
+            return;
         }
 
         //make sure that there is no '/' in header of url string
         if (url.indexOf('/') === 0) {
-            url = url.slice(1, url.length - 1);
+            url = url.slice(1, url.length);
         }
         url = targetHost + '/' + url;
-
 
         let token = req.body.token || req.query.token || req.header['x-access-token'] || req.get('Authorization') || req.query.token;
 
         //request
         try {
-            let response = await axios({
+            let optionRequest = {
                 method: req.method.toLowerCase(),
                 url: url,
-                data: req.body,
-                headers: {
-                    'Authorization': token
-                }
-            });
-            res.json(response);
+                data: req.body
+            };
+            if (token) {
+                optionRequest.headers = {};
+                optionRequest.headers['Authorization'] = token;
+            }
+            let response = await axios(optionRequest);
+            res.status(response.data.code).json(response.data);
         } catch (e) {
             console.log('Proxy route error: ', e);
             res.json(responseTemplate(CODES.INTERNAL_SERVER_ERROR, 'Server not response', {}));

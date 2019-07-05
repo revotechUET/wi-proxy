@@ -1,6 +1,6 @@
 let config = {
-    targetHost: 'localhost:2999',
-    skipUrls: []
+    targetHost: 'http://localhost:2999',
+    skipUrls: ['/login']
 };
 
 module.exports = config;
