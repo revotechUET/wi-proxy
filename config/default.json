@@ -13,6 +13,7 @@
             "user": "i2g",
             "password": "qwertyuiop"
         },
-        "wi_auth": "http://localhost:2999"
+        "wi_auth": "http://localhost:2999",
+        "wi_backend": "http://localhost:3000"
     }
 }

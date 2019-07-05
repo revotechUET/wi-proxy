@@ -30,7 +30,7 @@ function proxyRouteOf(hostConfig) {
 
 
         //IF THIS IS FORM_DATA
-        if (req.headers['content-type'].indexOf('multipart/form-data') >= 0) {
+        if (req.headers['content-type'] && req.headers['content-type'].indexOf('multipart/form-data') >= 0) {
             try {
                 let formData = new FormData();
                 let keyArr = Object.keys(req.body);
@@ -77,7 +77,7 @@ function proxyRouteOf(hostConfig) {
             res.status(response.data.code).json(response.data);
         } catch (e) {
             console.log('Proxy route error: ', e);
-            res.json(responseTemplate(CODES.INTERNAL_SERVER_ERROR, 'Server not response', {}));
+            res.status(CODES.INTERNAL_SERVER_ERROR).json(responseTemplate(CODES.INTERNAL_SERVER_ERROR, 'Server not response', {}));
         }
     }
 }

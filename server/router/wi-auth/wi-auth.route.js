@@ -5,9 +5,10 @@ const https = require('https');
 
 const CODES = require('./../../helper/response.helper').CODES;
 const responseTemplate = require('./../../helper/response.helper').response;
-let proxyConfig = require('./wi-auth.config');
 
-let commandExec = require('./../../helper/commandExec.helper');
+// let commandExec = require('./../../helper/commandExec.helper');
+
+let proxyConfig = require('./wi-auth.config');
 
 let wiAuthCloudUrl = process.env.WI_AUTH_CLOUD || config.get("cloud.wi_auth") || 'https://users.i2g.cloud';
 let wiAuthLocalUrl = process.env.WI_AUTH_LOCAL || config.get("local.wi_auth") || 'http://localhost:2999';
@@ -26,7 +27,7 @@ const agent = new https.Agent({
 router.post('/login', async (req, res)=>{
     //try if there is account exist or not
     try {
-        let response = await axios.post(proxyConfig.targetHost + '/login', req.body);
+        let response = await axios.post(wiAuthLocalUrl + '/login', req.body);
 
         //if this account is not exist in local
         if (response.data.reason === 'User is not exists.') {
@@ -40,7 +41,7 @@ router.post('/login', async (req, res)=>{
                 let token = responseAuthCloud.data.content.token;
                 let idCompany = responseAuthCloud.data.content.company.idCompany || null;
                 await makeCompanyExist(responseAuthCloud.data.content.company, token);
-                responseAuthCloud = await axios.post(wiAuthLocalUrl + '/user/new', {
+                let responseAuthLocal = await axios.post(wiAuthLocalUrl + '/user/new', {
                     username: req.body.username,
                     password: req.body.password,
                     idCompany: idCompany,
@@ -51,8 +52,7 @@ router.post('/login', async (req, res)=>{
                         Authorization: token
                     }
                 });
-                console.log(responseAuthCloud.data);
-                if (responseAuthCloud.data.code === 200) {
+                if (responseAuthLocal.data.code === 200) {
                     let anotherResponse = await axios.post(wiAuthLocalUrl + '/login', req.body);
                     res.status(anotherResponse.data.code).json(anotherResponse.data);
                     return;
@@ -62,6 +62,7 @@ router.post('/login', async (req, res)=>{
         res.status(response.data.code).json(response.data);
     } catch (e) {
         console.log(e);
+        res.status(CODES.INTERNAL_SERVER_ERROR).json(responseTemplate(CODES.INTERNAL_SERVER_ERROR, 'Server not response', {}));
     }
 });
 
