@@ -1,6 +1,9 @@
 const axios = require('axios');
 let CODES = require('./response.helper').CODES;
 let responseTemplate = require('./response.helper').response;
+const fs = require('fs');
+const FormData = require('form-data');
+
 
 function proxyRouteOf(hostConfig) {
     let skipUrls = hostConfig.skipUrls;
@@ -25,7 +28,37 @@ function proxyRouteOf(hostConfig) {
 
         let token = req.body.token || req.query.token || req.header['x-access-token'] || req.get('Authorization') || req.query.token;
 
-        //request
+
+        //IF THIS IS FORM_DATA
+        if (req.headers['content-type'].indexOf('multipart/form-data') >= 0) {
+            try {
+                let formData = new FormData();
+                let keyArr = Object.keys(req.body);
+                for (let i in keyArr) {
+                    formData.append(keyArr[i], req.body[keyArr[i]]);
+                }
+                console.log(req.file);
+                formData.append('data', fs.createReadStream(req.file.path));
+                console.log(formData);
+                let headers = formData.getHeaders();
+                headers.Authorization = token;
+                let response = await axios.post(
+                    hostConfig.targetHost + '/project/well/dataset/curve/new-raw-curve',
+                    formData,
+                    {
+                        headers: headers
+                    }
+                );
+
+                res.status(response.data.code).json(response.data);
+                return;
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+        }
+
+        //IF THIS IS JSON/APPLICATION
         try {
             let optionRequest = {
                 method: req.method.toLowerCase(),
