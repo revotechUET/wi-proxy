@@ -31,14 +31,14 @@ router.post('/project/well/dataset/curve/new-raw-curve', upload.single('data'), 
         }
         formData.append('data', fs.createReadStream(req.file.path));
         console.log(formData);
+        let headers = formData.getHeaders();
         let token = req.body.token || req.query.token || req.header['x-access-token'] || req.get('Authorization') || req.query.token;
+        headers.Authorization = token;
         let response = await axios.post(
             proxyConfig.targetHost + '/project/well/dataset/curve/new-raw-curve',
             formData,
             {
-                headers: {
-                    Authorization: token
-                }
+                headers: headers
             }
         );
         // console.log(response.data);
