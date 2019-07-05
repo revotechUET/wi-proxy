@@ -1,8 +1,5 @@
 const router = require('express').Router();
-const FormData = require('form-data');
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
+
 
 let proxyConfig = require('./wi-backend.config');
 
