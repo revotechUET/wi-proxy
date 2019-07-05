@@ -62,5 +62,9 @@ typings/
 # next.js build output
 .next
 
-#uploads file
+
+
+# ignore files in folder foo
 uploads/*
+# but keep the folder
+!uploads/.gitkeep
