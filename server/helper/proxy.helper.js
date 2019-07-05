@@ -16,7 +16,7 @@ function proxyRouteOf(hostConfig) {
             next();
             return;
         }
-
+        console.log('RUN THIS');
         //make sure that there is no '/' in header of url string
         if (url.indexOf('/') === 0) {
             url = url.slice(1, url.length);
@@ -32,10 +32,14 @@ function proxyRouteOf(hostConfig) {
                 url: url,
                 data: req.body
             };
+
+            //add token if there is a token
             if (token) {
                 optionRequest.headers = {};
                 optionRequest.headers['Authorization'] = token;
             }
+
+            //request and response
             let response = await axios(optionRequest);
             res.status(response.data.code).json(response.data);
         } catch (e) {

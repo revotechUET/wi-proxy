@@ -12,6 +12,7 @@
             "host": "localhost:3306",
             "user": "i2g",
             "password": "qwertyuiop"
-        }
+        },
+        "wi_auth": "http://localhost:2999"
     }
 }
