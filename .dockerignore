@@ -51,3 +51,5 @@ deploy
 
 # Documentation file
 *.md
+
+uploads/*

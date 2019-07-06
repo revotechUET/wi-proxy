@@ -49,7 +49,7 @@ function proxyRouteOf(hostConfig) {
                         headers: headers
                     }
                 );
-
+                await fs.unlink(req.file.path);
                 res.status(response.data.code).json(response.data);
                 return;
             } catch (e) {
