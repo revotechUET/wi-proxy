@@ -30,7 +30,7 @@ router.post('/login', async (req, res)=>{
         let response = await axios.post(wiAuthLocalUrl + '/login', req.body);
 
         //if this account is not exist in local
-        if (response.data.reason === 'User is not exists.') {
+        if (response.data.reason.toString() === 'User is not exists.') {
             //check if cloud server has this account
             let responseAuthCloud = await axios.post(wiAuthCloudUrl + '/login',
                 req.body, {
@@ -57,6 +57,9 @@ router.post('/login', async (req, res)=>{
                     res.status(anotherResponse.data.code).json(anotherResponse.data);
                     return;
                 }
+            } else {
+                res.status(responseAuthCloud.data.code).json(responseAuthCloud.data);
+                return;
             }
         }
         res.status(response.data.code).json(response.data);

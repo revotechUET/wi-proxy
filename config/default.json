@@ -1,19 +1,19 @@
 {
-    "host": {
-        "port": 3033
+  "host": {
+    "port": 3033
+  },
+  "cloud": {
+    "wi_auth": "https://users.i2g.cloud",
+    "wi_backend": "https://api-1.i2g.cloud",
+    "prefix_database": "wi1004_"
+  },
+  "local": {
+    "wi_mysql": {
+      "host": "localhost:3306",
+      "user": "i2g",
+      "password": "qwertyuiop"
     },
-    "cloud": {
-        "wi_auth": "https://users.i2g.cloud",
-        "wi_backend": "https://api-1.i2g.cloud",
-        "prefix_database": "wi1004_"
-    },
-    "local": {
-        "wi_mysql": {
-            "host": "localhost:3306",
-            "user": "i2g",
-            "password": "qwertyuiop"
-        },
-        "wi_auth": "http://localhost:2999",
-        "wi_backend": "http://localhost:3000"
-    }
+    "wi_auth": "http://localhost:2999",
+    "wi_backend": "http://localhost:3000"
+  }
 }
