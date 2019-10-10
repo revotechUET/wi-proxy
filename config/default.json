@@ -14,6 +14,7 @@
       "password": "qwertyuiop"
     },
     "wi_auth": "http://localhost:2999",
-    "wi_backend": "http://localhost:3000"
+    "wi_backend": "http://localhost:3000",
+    "wi_sync": "http://localhost:9099"
   }
 }
